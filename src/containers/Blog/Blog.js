@@ -8,6 +8,7 @@ import './Blog.css';
 import axios from '../../axios'
 // We comment out the above axios import
 
+import NewPost from '../NewPost/NewPost'
 
 import Posts from '../Posts/Posts'
 
@@ -44,6 +45,8 @@ class Blog extends Component {
                 {/* <Route path='/' exact render={()=> <h1>Home</h1>}/>
                 <Route path='/' exact render={()=> <h1>Home 2</h1>}/> */}
                 <Route path= '/' exact component={Posts} />
+                <Route path= '/new-post' component={NewPost} />
+
                 
             </div>
         );
