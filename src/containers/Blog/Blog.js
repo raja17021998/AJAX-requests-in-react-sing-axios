@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 //import axios from 'axios'
 
 // We use the Link component because if we do not use that, our full page reloads as we switch between the pages, so the application looses its state, which we do not want in our application. Link component allows us to do that. 
-import {Route, NavLink} from 'react-router-dom';
+import {Route, NavLink, Switch} from 'react-router-dom';
 
 //we use NavLink has some styles which allow to apply styling to some links
+
+//we use Switch to render selected urls 
 import './Blog.css';
 
 //import axios from '../../axios'
@@ -13,6 +15,7 @@ import './Blog.css';
 import NewPost from '../NewPost/NewPost'
 
 import Posts from '../Posts/Posts'
+import FullPost from '../FullPost/FullPost';
 
 class Blog extends Component {
     render () {
@@ -42,8 +45,14 @@ class Blog extends Component {
                 without exact will render all. */}
                 {/* <Route path='/' exact render={()=> <h1>Home</h1>}/>
                 <Route path='/' exact render={()=> <h1>Home 2</h1>}/> */}
-                <Route path= '/' exact component={Posts} />
-                <Route path= '/new-post' component={NewPost} />   
+
+                <Switch >
+                    <Route path= '/' exact component={Posts} />
+                    <Route path= '/new-post' component={NewPost} />
+                    <Route path= '/:id' exact component={FullPost} /> 
+                    {/* take care of the ordering of the routes   */}
+                </Switch>
+                
             </div>
         );
     }
