@@ -6,7 +6,11 @@ import Post from '../../components/Post/Post'
 
 import '../Posts/Posts.css'
 
-import {Link} from 'react-router-dom';
+import {Route} from 'react-router-dom';
+
+import FullPost from '../FullPost/FullPost'
+
+//import {Link} from 'react-router-dom';
 
 class Posts extends Component{
 
@@ -17,14 +21,20 @@ class Posts extends Component{
     }
 
     postSelectHandler = (id) => {
-        this.setState({selectedPostId: id});
+        // this.setState({selectedPostId: id});
+
+        // we want tp navigate programatically
+        // push() in history is used to push a new page onto the stack of pages, because basically navigation is nothing, but to move forward and backward in stack of pages, and that's why we have forward and backward buttons in our browser
+
+        // this.props.history.push({pathname: '/'+id});
+        this.props.history.push('/posts/'+id);
     }
 
     componentWillMount(){
 
         console.log(this.props);
         // get() used for sending get requests
-        axios.get('/posts')
+        axios.get('/posts/')
 
             .then(response => {
 
@@ -51,24 +61,33 @@ class Posts extends Component{
 
         if(!this.state.error){
             posts= this.state.posts.map(post => {
-                return (
-                <Link to ={'/'+post.id} key={post.id} >
-                    <Post 
+                return<Post 
                     key={post.id}
                     title={post.title} 
                     author={post.author} 
                     clicked={() => this.postSelectHandler(post.id)}/>;
-                </Link>
-                )
-             }
-         );
-            
+
+                    // <Post> can also be wrapped in a <Link >
+                // <Link to ={'/'+post.id} key={post.id} >
+                    
+                // </Link>
+                
+                
+             });
+         
         }
+       
         return(
+            <div>
             <section className="Posts">
                 {posts}
             </section>
+            {/* <Route path= '/posts/:id' exact component={FullPost} />  */}
+            {/* this is really cumbersome to do. And we dont get a fully dynamic route. */}
 
+            <Route path= {this.props.match.url+'/:id'} exact component={FullPost} />
+            </div>
+            
         );
 
     }

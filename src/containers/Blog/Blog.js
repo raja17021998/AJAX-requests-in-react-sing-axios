@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import axios from 'axios'
 
 // We use the Link component because if we do not use that, our full page reloads as we switch between the pages, so the application looses its state, which we do not want in our application. Link component allows us to do that. 
-import {Route, NavLink, Switch} from 'react-router-dom';
+import {Route, NavLink, Switch, Redirect} from 'react-router-dom';
 
 //we use NavLink has some styles which allow to apply styling to some links
 
@@ -15,7 +15,8 @@ import './Blog.css';
 import NewPost from '../NewPost/NewPost'
 
 import Posts from '../Posts/Posts'
-import FullPost from '../FullPost/FullPost';
+//import FullPost from '../FullPost/FullPost';
+//it is in Post.js
 
 class Blog extends Component {
     render () {
@@ -26,7 +27,7 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><NavLink to ="/" exact>Home</NavLink></li>
+                            <li><NavLink to ="/posts/" exact>Posts</NavLink></li>
                             <li><NavLink to ={{
                                 pathname: "/new-post",
                                 //use this.props.match.url+'/path', for relative paths, whuch will append this path, to the current path on which you are in
@@ -47,10 +48,13 @@ class Blog extends Component {
                 <Route path='/' exact render={()=> <h1>Home 2</h1>}/> */}
 
                 <Switch >
-                    <Route path= '/' exact component={Posts} />
                     <Route path= '/new-post' component={NewPost} />
-                    <Route path= '/:id' exact component={FullPost} /> 
+                    <Route path= '/posts/'  component={Posts} />
+                    {/* <Route path= '/:id' exact component={FullPost} />  */}
                     {/* take care of the ordering of the routes   */}
+                    <Redirect from='/' to='/posts' />
+                    {/* <Route path= '/'  component={Posts} /> */}
+
                 </Switch>
                 
             </div>
