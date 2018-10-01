@@ -18,7 +18,9 @@ class Posts extends Component{
         this.setState({selectedPostId: id});
     }
 
-    componentDidMount(){
+    componentWillMount(){
+
+        console.log(this.props);
         // get() used for sending get requests
         axios.get('/posts')
 

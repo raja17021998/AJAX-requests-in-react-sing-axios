@@ -2,6 +2,8 @@ import React from 'react';
 
 import './Post.css';
 
+import {withRouter} from 'react-router-dom';
+
 const post = (props) => (
     <article className="Post" onClick={props.clicked}>
         <h1>{props.title}</h1>
@@ -11,4 +13,7 @@ const post = (props) => (
     </article>
 );
 
-export default post;
+export default withRouter(post);
+
+//we use withRouter as a higher order component, which makes the wrapped component wrap aware, for getting history, location and match
+
