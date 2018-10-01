@@ -12,13 +12,22 @@ import './Blog.css';
 //import axios from '../../axios'
 // We comment out the above axios import
 
-import NewPost from '../NewPost/NewPost'
+//This is commented due to webpack configurations
+// import NewPost from '../NewPost/NewPost'
+
+import asyncComponent from '../../hoc/asyncComponent';
+const AsyncNewPost= asyncComponent(()=> {
+    return import('../NewPost/NewPost');
+});
 
 import Posts from '../Posts/Posts'
 //import FullPost from '../FullPost/FullPost';
 //it is in Post.js
 
 class Blog extends Component {
+    state={
+        auth: true
+    }
     render () {
 
         //posts should be an array of JSX elements
@@ -48,11 +57,14 @@ class Blog extends Component {
                 <Route path='/' exact render={()=> <h1>Home 2</h1>}/> */}
 
                 <Switch >
-                    <Route path= '/new-post' component={NewPost} />
+                  {this.state.auth ?<Route path= '/new-post' component={asyncComponent} /> : null}  
                     <Route path= '/posts/'  component={Posts} />
                     {/* <Route path= '/:id' exact component={FullPost} />  */}
                     {/* take care of the ordering of the routes   */}
-                    <Redirect from='/' to='/posts' />
+                    
+                    {/* This is commented to handle 404 case in a different way */}
+                    <Route render= {()=> <h1>Error 404 not found !!</h1>} />
+                    {/* <Redirect from='/' to='/posts' /> */}
                     {/* <Route path= '/'  component={Posts} /> */}
 
                 </Switch>
